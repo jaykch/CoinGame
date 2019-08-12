@@ -5,82 +5,95 @@ import model.interfaces.CoinPair;
 import model.interfaces.Player;
 
 public class SimplePlayer implements Player {
-	
+
+	// Instantiate variables for player
+	private String playerId;
+	private String playerName;
+	private int points;
+	private int bet;
+	private BetType betType;
+
+	// TODO not sure about this
+	private CoinPair coinPair;
+
 	public SimplePlayer(String playerId, String playerName, int initialPoints) {
-		
+		this.playerId = playerId;
+		this.playerName = playerName;
+		this.points = initialPoints;
 	}
 
 	@Override
 	public String getPlayerName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.playerName;
 	}
 
 	@Override
 	public void setPlayerName(String playerName) {
-		// TODO Auto-generated method stub
-		
+		this.playerName = playerName;
 	}
 
 	@Override
 	public int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.points;
 	}
 
 	@Override
 	public void setPoints(int points) {
-		// TODO Auto-generated method stub
-		
+		this.points = points;
 	}
 
 	@Override
 	public String getPlayerId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.playerId;
 	}
 
 	@Override
 	public boolean setBet(int bet) {
-		// TODO Auto-generated method stub
+		// TODO get this logic checked
+		if (bet > 0 && bet <= this.getPoints()) {
+			this.bet = bet;
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public int getBet() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.bet;
 	}
 
 	@Override
 	public void setBetType(BetType betType) {
-		// TODO Auto-generated method stub
-		
+		this.betType = betType;
 	}
 
 	@Override
 	public BetType getBetType() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.betType;
 	}
 
 	@Override
 	public void resetBet() {
-		// TODO Auto-generated method stub
-		
+		this.bet = 0;
+		this.betType = BetType.NO_BET;
+		// TODO Reset bet type to NO_BET
 	}
 
 	@Override
 	public CoinPair getResult() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.coinPair;
 	}
 
 	@Override
 	public void setResult(CoinPair coinPair) {
-		// TODO Auto-generated method stub
-		
+		this.coinPair = coinPair;
 	}
-
-
+	
+	@Override
+	public String toString() {
+		return "Player: id=" + this.playerId + ", name=" + this.playerName + ", bet=" + this.bet + "betType="
+				+ this.betType + "points=" + this.points + ", Result .. Coin 1: " + this.coinPair.getCoin1()
+				+ ", Coin 2: " + this.coinPair.getCoin2();
+		// TODO get this checked
+	}
 }
