@@ -1,29 +1,31 @@
 package model;
 
 import model.interfaces.CoinPair;
+import model.interfaces.Coin;
+
 
 public class CoinPairImpl implements CoinPair {
 
 	// TODO check if this is right? What do they mean by specified constructor of
 	// CoinImpl?
 
-	private CoinImpl coin1;
-	private CoinImpl coin2;
+	private Coin coin1;
+	private Coin coin2;
 
 	public CoinPairImpl() {
 		this.coin1 = new CoinImpl(1);
-		this.coin2 = new CoinImpl(2);
+		this.coin2 = new CoinImpl(2);		
 	}
 
 	// TODO use coinImpl instead of coin?
 
 	@Override
-	public CoinImpl getCoin1() {
+	public Coin getCoin1() {
 		return this.coin1;
 	}
 
 	@Override
-	public CoinImpl getCoin2() {
+	public Coin getCoin2() {
 		return this.coin2;
 	}
 
