@@ -13,7 +13,7 @@ public class SimplePlayer implements Player {
 	private int bet;
 	private BetType betType;
 
-	// TODO not sure about this
+	// TODO player.setResult set the coinpair
 	private CoinPair coinPair;
 
 	public SimplePlayer(String playerId, String playerName, int initialPoints) {
@@ -49,7 +49,7 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public boolean setBet(int bet) {
-		// TODO get this logic checked
+		// TODO if it is a valid bet - not null
 		if (bet > 0 && bet <= this.getPoints()) {
 			this.bet = bet;
 			return true;

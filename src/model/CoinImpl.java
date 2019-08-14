@@ -7,7 +7,7 @@ public class CoinImpl implements Coin {
 
 	private int number;
 
-	// TODO check these variables
+	// TODO check these variables use math random
 	private CoinFace face;
 
 	public CoinImpl(int number) {
@@ -27,8 +27,6 @@ public class CoinImpl implements Coin {
 
 	@Override
 	public void flip() {
-		// TODO Not sure about this
-
 		if (this.face == CoinFace.HEADS) {
 			this.face = CoinFace.TAILS;
 		} else if (this.face == CoinFace.TAILS) {
@@ -56,13 +54,13 @@ public class CoinImpl implements Coin {
 
 	@Override
 	public int hashCode() {
-		// TODO how is hash code generated?
+		// TODO how is hash code generated? there is method called coHashutilitiy method objects.utils method 
 		return 0;
 	}
 
 	@Override
 	public String toString() {
-		// TODO how to capitalise enum switch statement?
+		// TODO if else or to string
 		return "Coin" + this.number + ": " + this.face;
 	}
 }

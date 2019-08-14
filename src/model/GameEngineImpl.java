@@ -1,8 +1,9 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.enumeration.BetType;
 import model.interfaces.CoinPair;
@@ -14,13 +15,18 @@ import view.interfaces.GameEngineCallback;
 
 public class GameEngineImpl implements GameEngine {
 
-	// TODO is this correct implementation?
-	private Collection<Player> players = new ArrayList<Player>();
+	// TODO is this correct implementation? hashmap
+	private Map<String, Player> players;
+
+	public GameEngineImpl() {
+		super();
+		players = new HashMap<String, Player>();
+	}
 
 	@Override
 	public void spinPlayer(Player player, int initialDelay1, int finalDelay1, int delayIncrement1, int initialDelay2,
 			int finalDelay2, int delayIncrement2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Math random face.values.length
 
 	}
 
@@ -41,25 +47,24 @@ public class GameEngineImpl implements GameEngine {
 	public void addPlayer(Player player) {
 		// TODO check if this is good
 		if (player != null) {
-			players.add(player);
+			players.put(player.getPlayerId(), player);
 		}
 	}
 
 	@Override
 	public Player getPlayer(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return players.get(id);
 	}
 
 	@Override
 	public boolean removePlayer(Player player) {
 		// TODO check if gives boolean
-		return players.remove(player);
+		return players.remove(player.getPlayerId(), player);
 	}
 
 	@Override
 	public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
-		// TODO Auto-generated method stub
+		// TODO add game engine callback to collection
 
 	}
 
@@ -71,10 +76,7 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public Collection<Player> getAllPlayers() {
-		// TODO check with tutor
-
-		Collection<Player> unmodifablePlayers = Collections.unmodifiableCollection(this.players);
-		return unmodifablePlayers;
+		return Collections.unmodifiableCollection(this.players.values());
 	}
 
 	@Override
