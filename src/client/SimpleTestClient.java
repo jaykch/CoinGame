@@ -35,7 +35,7 @@ public class SimpleTestClient
       // just passing this does not mean it actually works .. you need to test yourself!
       // pass false if you want to show minimal logging (pass/fail) .. (i.e. ONLY once it passes)
       Validator.validate(true);
-
+      
       // create some test players
       Player[] players = new Player[] { new SimplePlayer("1", "The Coin Master", 1000),
          new SimplePlayer("2", "The Loser", 750), new SimplePlayer("3", "The Dabbler", 500) };

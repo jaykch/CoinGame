@@ -3,7 +3,6 @@ package model;
 import model.interfaces.CoinPair;
 import model.interfaces.Coin;
 
-
 public class CoinPairImpl implements CoinPair {
 
 	// TODO check if this is right? What do they mean by specified constructor of
@@ -14,7 +13,7 @@ public class CoinPairImpl implements CoinPair {
 
 	public CoinPairImpl() {
 		this.coin1 = new CoinImpl(1);
-		this.coin2 = new CoinImpl(2);		
+		this.coin2 = new CoinImpl(2);
 	}
 
 	// TODO use coinImpl instead of coin?
@@ -31,7 +30,8 @@ public class CoinPairImpl implements CoinPair {
 
 	@Override
 	public String toString() {
-		// TODO Capitalise faces use to string method if else statement ask in discussions convert to title case
+		// TODO Capitalise faces use to string method if else statement ask in
+		// discussions convert to title case
 		return "Coin 1: " + this.coin1.getFace() + "Coin 2: " + this.coin2.getFace();
 	}
 
@@ -47,7 +47,8 @@ public class CoinPairImpl implements CoinPair {
 
 	@Override
 	public boolean equals(Object coinPair) {
-		//TODO first check if this method is an instance of coinpair and  and then call coinpair method from above
+		// TODO first check if this method is an instance of coinpair and and then call
+		// coinpair method from above
 		if (((CoinPair) coinPair).getCoin1().equals(coin1) && ((CoinPair) coinPair).getCoin2().equals(coin2)) {
 			return true;
 		}
@@ -56,7 +57,7 @@ public class CoinPairImpl implements CoinPair {
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return this.hashCode();
 	}
 
 }

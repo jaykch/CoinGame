@@ -12,7 +12,7 @@ public class CoinImpl implements Coin {
 
 	public CoinImpl(int number) {
 		this.number = number;
-		// TODO randomly initialise coinface
+		this.face = CoinFace.values()[(int) (Math.random() * CoinFace.values().length)];
 	}
 
 	@Override
@@ -54,13 +54,15 @@ public class CoinImpl implements Coin {
 
 	@Override
 	public int hashCode() {
-		// TODO how is hash code generated? there is method called coHashutilitiy method objects.utils method 
-		return 0;
+		// TODO is this right?
+		return this.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		// TODO if else or to string
-		return "Coin" + this.number + ": " + this.face;
+		final CoinFace capitaliseFace = this.face;
+		// TODO check if this is correct as using toString will convert the face enum into a string
+		return "Coin" + this.number + ": " + capitaliseFace.toString().substring(0, 1)
+				+ capitaliseFace.toString().substring(1).toLowerCase();
 	}
 }
