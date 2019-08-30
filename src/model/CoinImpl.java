@@ -7,7 +7,7 @@ public class CoinImpl implements Coin {
 
 	private int number;
 
-	// TODO check these variables use math random
+	// Declare variable to store coin face
 	private CoinFace face;
 
 	public CoinImpl(int number) {
@@ -45,11 +45,7 @@ public class CoinImpl implements Coin {
 
 	@Override
 	public boolean equals(Object coin) {
-		// TODO Check this to see if this is how cast works
-		if (this.face == ((Coin) coin).getFace()) {
-			return true;
-		}
-		return false;
+		return this.equals(((Coin) coin));
 	}
 
 	@Override

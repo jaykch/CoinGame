@@ -88,12 +88,12 @@ public class SimplePlayer implements Player {
 	public void setResult(CoinPair coinPair) {
 		this.coinPair = coinPair;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Player: id=" + this.playerId + ", name=" + this.playerName + ", bet=" + this.bet + "betType="
-				+ this.betType + "points=" + this.points + ", Result .. Coin 1: " + this.coinPair.getCoin1()
-				+ ", Coin 2: " + this.coinPair.getCoin2();
-		// TODO get this checked
+
+		return "Player: id=" + this.playerId + ", name=" + this.playerName + ", bet=" + this.bet + ", betType="
+				+ this.betType + ", points=" + this.points + ", Result .. Coin 1: " + this.coinPair.getCoin1().toString().substring(7) + ", Coin 2: "
+				+ this.coinPair.getCoin2().toString().substring(7);
 	}
 }

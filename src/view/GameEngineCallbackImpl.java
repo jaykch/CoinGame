@@ -21,50 +21,50 @@ import view.interfaces.GameEngineCallback;
  */
 public class GameEngineCallbackImpl implements GameEngineCallback {
 	private static final Logger logger = Logger.getLogger(GameEngineCallback.class.getName());
-	
-	
-	
 
 	public GameEngineCallbackImpl() {
-		
-		// Get rid of any handlers the root logger has so it does not interfere with the logger here
+
+		// Get rid of any handlers the root logger has so it does not interfere with the
+		// logger here
 		LogManager.getLogManager().reset();
-		
-		// NOTE need to also set the console to FINE in
-		// %JRE_HOME%\lib\logging.properties
+
+		// Set logger level
 		logger.setLevel(Level.FINE);
-		
-		//TODO declaring handler
+
+		// Declare handler to override default logger
 		ConsoleHandler ch = new ConsoleHandler();
 		ch.setLevel(Level.FINE);
 		logger.addHandler(ch);
 	}
 
 	public void playerCoinUpdate(Player player, Coin coin, GameEngine engine) {
-	
-		//TODO should I use two string here?
-		
-		logger.log(Level.FINE, player.getPlayerName() + " coin " + coin.getNumber() + " flipped to " + coin.getFace());
-		// TODO: how to write the playerCoinUpdate
+
+		logger.log(Level.FINE,
+				player.getPlayerName() + " coin " + coin.getNumber() + " flipped to " + coin.toString().substring(7));
 	}
 
 	public void playerResult(Player player, CoinPair coinPair, GameEngine engine) {
-		// final results logged at Level.INFO
-		logger.log(Level.INFO, "Result data to log .. String.format() is good here!");
-		// TODO: complete this method to log results
+
+		logger.log(Level.INFO,
+				player.getPlayerName() + ", final result= " + coinPair.toString());
 	}
 
 	@Override
 	public void spinnerCoinUpdate(Coin coin, GameEngine engine) {
-		// TODO Auto-generated method stub
-
+		String spinnerName = "Spinner";
+		logger.log(Level.FINE,
+				spinnerName + " coin " + coin.getNumber() + " flipped to " + coin.toString().substring(7));
 	}
 
 	@Override
 	public void spinnerResult(CoinPair coinPair, GameEngine engine) {
-		// TODO Auto-generated method stub
-
+		String spinnerName = "Spinner";
+		logger.log(Level.INFO, spinnerName + ", final result=" + coinPair.toString());
+		
+		String finalResult = "Final Player Results\n";
+	    for (Player player : engine.getAllPlayers()) {
+	    	finalResult += String.format("Player: %s", player.toString() + "\n");
+	    }
+		logger.log(Level.INFO, finalResult);
 	}
-
-	// TODO: implement rest of interface
 }
