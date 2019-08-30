@@ -115,6 +115,11 @@ public class GameEngineImpl implements GameEngine {
 		this.applyBetResults(coinPair);
 		callback.spinnerResult(coinPair, this);
 		
+		
+		// Set bets to 0 at the end
+		for (Player player : getAllPlayers()) {
+			player.setBet(0);
+		}		
 	}
 
 
