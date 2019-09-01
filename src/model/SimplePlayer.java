@@ -12,11 +12,10 @@ public class SimplePlayer implements Player {
 	private int points;
 	private int bet;
 	private BetType betType;
-
-	// TODO player.setResult set the coinpair
 	private CoinPair coinPair;
 
 	public SimplePlayer(String playerId, String playerName, int initialPoints) {
+		// Assign player information
 		this.playerId = playerId;
 		this.playerName = playerName;
 		this.points = initialPoints;
@@ -49,7 +48,6 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public boolean setBet(int bet) {
-		// TODO if it is a valid bet - not null
 		if (bet > 0 && bet <= this.getPoints()) {
 			this.bet = bet;
 			return true;
@@ -76,7 +74,6 @@ public class SimplePlayer implements Player {
 	public void resetBet() {
 		this.bet = 0;
 		this.betType = BetType.NO_BET;
-		// TODO Reset bet type to NO_BET
 	}
 
 	@Override
@@ -91,9 +88,9 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public String toString() {
-
 		return "Player: id=" + this.playerId + ", name=" + this.playerName + ", bet=" + this.bet + ", betType="
-				+ this.betType + ", points=" + this.points + ", Result .. Coin 1: " + this.coinPair.getCoin1().toString().substring(7) + ", Coin 2: "
+				+ this.betType + ", points=" + this.points + ", Result .. Coin 1: "
+				+ this.coinPair.getCoin1().toString().substring(7) + ", Coin 2: "
 				+ this.coinPair.getCoin2().toString().substring(7);
 	}
 }

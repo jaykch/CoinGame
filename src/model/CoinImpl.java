@@ -36,7 +36,6 @@ public class CoinImpl implements Coin {
 
 	@Override
 	public boolean equals(Coin coin) {
-		// TODO Check this and ask if can return false without else
 		if (this.face == coin.getFace()) {
 			return true;
 		}
@@ -50,14 +49,12 @@ public class CoinImpl implements Coin {
 
 	@Override
 	public int hashCode() {
-		// TODO is this right?
 		return this.hashCode();
 	}
 
 	@Override
 	public String toString() {
 		final CoinFace capitaliseFace = this.face;
-		// TODO check if this is correct as using toString will convert the face enum into a string
 		return "Coin" + this.number + ": " + capitaliseFace.toString().substring(0, 1)
 				+ capitaliseFace.toString().substring(1).toLowerCase();
 	}

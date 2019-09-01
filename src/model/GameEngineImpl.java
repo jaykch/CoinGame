@@ -3,125 +3,130 @@ package model;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import model.enumeration.BetType;
 import model.interfaces.Coin;
 import model.interfaces.CoinPair;
 import model.interfaces.GameEngine;
 import model.interfaces.Player;
-import view.GameEngineCallbackImpl;
 import view.interfaces.GameEngineCallback;
-
-//TODO do I need to add my name to every class I make
 
 public class GameEngineImpl implements GameEngine {
 
-	// Declare hashmaps to store players and game engine callbacks
+	// Declare hashmap to store players and game engine callback
+
 	private Map<String, Player> players;
-	private Map<Integer, GameEngineCallback> gameEngineCallbacks;
+	private Set<GameEngineCallback> gameEngineCallbacks;
+
+	// Constructor to instantiate game engine
 
 	public GameEngineImpl() {
 		super();
+
+		// Instantiate players and callback collection
+
 		players = new HashMap<String, Player>();
-		gameEngineCallbacks = new HashMap<Integer, GameEngineCallback>();
+		gameEngineCallbacks = new LinkedHashSet<GameEngineCallback>();
 	}
 
 	@Override
 	public void spinPlayer(Player player, int initialDelay1, int finalDelay1, int delayIncrement1, int initialDelay2,
 			int finalDelay2, int delayIncrement2) throws IllegalArgumentException {
 
-		GameEngineCallback callback = new GameEngineCallbackImpl();
+		// Instantiate a coin pair for the player
 
 		CoinPair coinPair = new CoinPairImpl();
-		player.setResult(coinPair);
 
-		Coin coin1 = player.getResult().getCoin1();
-		Coin coin2 = player.getResult().getCoin2();
+		// Call method to spin coins
 
-		int currentDelay1 = initialDelay1;
-		int currentDelay2 = initialDelay2;
+		this.spinCoins(player, initialDelay1, finalDelay1, delayIncrement1, initialDelay2, finalDelay2, delayIncrement2,
+				coinPair);
 
-		while (currentDelay1 <= finalDelay1 || currentDelay2 <= finalDelay2) {
-
-			// TODO find out what they are doing with the sleep of both delays? Are we
-			// supposed to sleep after each coin flip and if this is the case, using this
-			// logic spinner's coins spin too many times
-
-			try {
-				Thread.sleep(currentDelay1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			currentDelay1 += delayIncrement1;
-			currentDelay2 += delayIncrement2;
-
-			if (currentDelay1 <= finalDelay1) {
-				coin1.flip();
-				callback.playerCoinUpdate(player, coin1, this);
-			}
-			if (currentDelay2 <= finalDelay2) {
-				coin2.flip();
-				callback.playerCoinUpdate(player, coin2, this);
-			}
+		for (GameEngineCallback callback : gameEngineCallbacks) {
+			callback.playerResult(player, coinPair, this);
 		}
-		callback.playerResult(player, coinPair, this);
 	}
 
 	@Override
 	public void spinSpinner(int initialDelay1, int finalDelay1, int delayIncrement1, int initialDelay2, int finalDelay2,
 			int delayIncrement2) throws IllegalArgumentException {
 
-		
-		GameEngineCallback callback = new GameEngineCallbackImpl();
+		// Instantiate a coin pair for the spinner
 
 		CoinPair coinPair = new CoinPairImpl();
-		
 
-		Coin coin1 = coinPair.getCoin1();
-		Coin coin2 = coinPair.getCoin2();
+		// Call method to spin coins
 
-		int currentDelay1 = initialDelay1;
-		int currentDelay2 = initialDelay2;
+		this.spinCoins(null, initialDelay1, finalDelay1, delayIncrement1, initialDelay2, finalDelay2, delayIncrement2,
+				coinPair);
 
-		while (currentDelay1 <= finalDelay1) {
+		// Apply bet results and call the final results
 
-	
-
-			try {
-				Thread.sleep(currentDelay2);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			currentDelay1 += delayIncrement1;
-			currentDelay2 += delayIncrement2;
-
-			if (currentDelay1 <= finalDelay1) {
-				coin1.flip();
-				coin2.flip();
-				callback.spinnerCoinUpdate(coin1, this);
-				callback.spinnerCoinUpdate(coin2, this);
-				// System.out.println(player.getPlayerName() + " " + coin1.toString());
-			}
-//			if (currentDelay2 <= finalDelay2) {
-//				coin2.flip();
-//				callback.spinnerCoinUpdate(coin2, this);
-//				// System.out.println(player.getPlayerName() + " " + coin2.toString());
-//			}
-		}
-		
 		this.applyBetResults(coinPair);
-		callback.spinnerResult(coinPair, this);
-		
-		
+
+		for (GameEngineCallback callback : gameEngineCallbacks) {
+			callback.spinnerResult(coinPair, this);
+		}
+
 		// Set bets to 0 at the end
 		for (Player player : getAllPlayers()) {
 			player.setBet(0);
-		}		
+		}
 	}
 
+	// Spin method for coins for both spinner and player
+
+	private void spinCoins(Player player, int initialDelay1, int finalDelay1, int delayIncrement1, int initialDelay2,
+			int finalDelay2, int delayIncrement2, CoinPair coinPair) {
+
+		Coin coin1;
+		Coin coin2;
+
+		if (player != null) {
+			player.setResult(coinPair);
+			coin1 = player.getResult().getCoin1();
+			coin2 = player.getResult().getCoin2();
+		} else {
+			coin1 = coinPair.getCoin1();
+			coin2 = coinPair.getCoin2();
+		}
+
+		int currentDelay1 = initialDelay1;
+
+		while (currentDelay1 < finalDelay1) {
+
+			this.delay(currentDelay1);
+
+			if (currentDelay1 <= finalDelay1) {
+
+				if (player != null) {
+					coin1.flip();
+
+					for (GameEngineCallback callback : gameEngineCallbacks) {
+						callback.playerCoinUpdate(player, coin1, this);
+					}
+					coin2.flip();
+					for (GameEngineCallback callback : gameEngineCallbacks) {
+						callback.playerCoinUpdate(player, coin2, this);
+					}
+				} else {
+					coin1.flip();
+					for (GameEngineCallback callback : gameEngineCallbacks) {
+						callback.spinnerCoinUpdate(coin1, this);
+					}
+					coin2.flip();
+					for (GameEngineCallback callback : gameEngineCallbacks) {
+						callback.spinnerCoinUpdate(coin2, this);
+					}
+				}
+
+			}
+			currentDelay1 += delayIncrement1;
+		}
+	}
 
 	@Override
 	public void applyBetResults(CoinPair spinnerResult) {
@@ -144,19 +149,17 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public boolean removePlayer(Player player) {
-		// TODO check if gives boolean
 		return players.remove(player.getPlayerId(), player);
 	}
 
 	@Override
 	public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
-		gameEngineCallbacks.put(gameEngineCallback.hashCode(), gameEngineCallback);
+		gameEngineCallbacks.add(gameEngineCallback);
 	}
 
 	@Override
 	public boolean removeGameEngineCallback(GameEngineCallback gameEngineCallback) {
-		// TODO check if this works
-		return gameEngineCallbacks.remove(gameEngineCallback.hashCode(), gameEngineCallback);
+		return gameEngineCallbacks.remove(gameEngineCallback);
 	}
 
 	@Override
@@ -170,4 +173,13 @@ public class GameEngineImpl implements GameEngine {
 		return player.setBet(bet);
 	}
 
+	// Method to add delay to flipping of coins
+
+	private void delay(int delay) {
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }

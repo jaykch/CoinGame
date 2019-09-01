@@ -45,8 +45,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 
 	public void playerResult(Player player, CoinPair coinPair, GameEngine engine) {
 
-		logger.log(Level.INFO,
-				player.getPlayerName() + ", final result= " + coinPair.toString());
+		logger.log(Level.INFO, player.getPlayerName() + ", final result= " + coinPair.toString());
 	}
 
 	@Override
@@ -60,11 +59,11 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 	public void spinnerResult(CoinPair coinPair, GameEngine engine) {
 		String spinnerName = "Spinner";
 		logger.log(Level.INFO, spinnerName + ", final result=" + coinPair.toString());
-		
+
 		String finalResult = "Final Player Results\n";
-	    for (Player player : engine.getAllPlayers()) {
-	    	finalResult += String.format("Player: %s", player.toString() + "\n");
-	    }
+		for (Player player : engine.getAllPlayers()) {
+			finalResult += String.format("Player: %s", player.toString() + "\n");
+		}
 		logger.log(Level.INFO, finalResult);
 	}
 }

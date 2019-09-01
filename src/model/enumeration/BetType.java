@@ -44,6 +44,7 @@ public enum BetType {
 	NO_BET {
 		@Override
 		public void applyWinLoss(Player player, CoinPair spinnerResult) {
+			// Set points to what they were before
 			player.setPoints(player.getPoints());
 		}
 	};
