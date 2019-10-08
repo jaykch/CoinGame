@@ -176,6 +176,11 @@ public class GameEngineImpl implements GameEngine {
 	// Method to add delay to flipping of coins
 
 	private void delay(int delay) {
+		//validation
+		// if less than or equal to 0, throw illegal argument exception if it is more than final delay
+		// if it doesnt outline write a method, validate spin parameters
+	
+		
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException e) {

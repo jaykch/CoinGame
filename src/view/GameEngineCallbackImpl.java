@@ -62,7 +62,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 
 		String finalResult = "Final Player Results\n";
 		for (Player player : engine.getAllPlayers()) {
-			finalResult += String.format("Player: %s", player.toString() + "\n");
+			finalResult += String.format("Player: %s#n", player.toString() + "\n");
 		}
 		logger.log(Level.INFO, finalResult);
 	}
