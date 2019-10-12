@@ -73,6 +73,7 @@ public class SimplePlayer implements Player {
 	@Override
 	public void resetBet() {
 		this.bet = 0;
+		//TODO: is this correct? that we need no bet instead of null
 		this.betType = BetType.NO_BET;
 	}
 
